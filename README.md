@@ -4,6 +4,10 @@
 
 Dynamic form generation for AI agents via Model Context Protocol (MCP).
 
+<p align="center">
+  <img src="./assets/bidur.png" alt="bi-dur" width="1000">
+</p>
+
 ## What It Does
 
 ```
