@@ -8,6 +8,10 @@ Dynamic form generation for AI agents via Model Context Protocol (MCP).
   <img src="./assets/bidur.png" alt="bi-dur" width="1000">
 </p>
 
+## Live Demo
+
+**[Try bidur Demo →](https://bidur-demo-latest.onrender.com)**
+
 ## What It Does
 
 ```
