@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gen-UI Form</title>
+    <link rel="stylesheet" href="/form.css">
+</head>
+
+<body>
+    <div class="container">
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Preparing form...</p>
+        </div>
+
+        <div id="error" class="error" style="display: none;">
+            <h2>⚠️ Error</h2>
+            <p id="error-message"></p>
+        </div>
+
+        <div id="form-container" style="display: none;">
+            <h1 id="form-title" class="form-title"></h1>
+            <p id="form-description" class="form-description"></p>
+
+            <form id="user-form" class="form">
+                <div id="form-fields"></div>
+                <button type="submit" id="submit-btn" class="submit-btn">Submit</button>
+            </form>
+        </div>
+
+        <div id="success-container" style="display: none;">
+            <h1 class="form-title">✅ <span id="success-title"></span></h1>
+            <p class="form-description">Form submitted successfully!</p>
+
+            <div class="output-section">
+                <h3>Your response:</h3>
+                <pre id="output-json" class="output-json"></pre>
+            </div>
+
+            <button id="fill-again-btn" class="fill-again-btn">Fill Again</button>
+        </div>
+    </div>
+
+    <script src="/form.js"></script>
+</body>
+
+</html>
