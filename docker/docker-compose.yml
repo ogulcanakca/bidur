@@ -1,0 +1,60 @@
+services:
+  mcp-server:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.mcp
+    container_name: gen-ui-mcp-server
+    ports:
+      - "${MCP_HOST_PORT:-8080}:8080"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4.1-nano-2025-04-14}
+      - MCP_TRANSPORT=sse
+      - MCP_PORT=8080
+      - FORM_SERVER_URL=http://form-server:9110
+      - GEN_UI_VERBOSE_OUTPUT=${GEN_UI_VERBOSE_OUTPUT:-false}
+    volumes:
+      - submissions:/app/.cache/submissions
+    depends_on:
+      form-server:
+        condition: service_healthy
+    networks:
+      - gen-ui-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  form-server:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.form
+    container_name: gen-ui-form-server
+    ports:
+      - "${FORM_HOST_PORT:-9110}:9110"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4.1-nano-2025-04-14}
+      - GEN_UI_SERVER_PORT=9110
+    volumes:
+      - submissions:/app/.cache/submissions
+    networks:
+      - gen-ui-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9110/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+volumes:
+  submissions:
+    driver: local
+
+networks:
+  gen-ui-network:
+    driver: bridge
